@@ -48,7 +48,11 @@ Write a test (in english) that you can picture for the class diagram you have cr
 
 You should feel free to number your brainstorm. 
 
-1. Test 1..
+1. Test `GuiController`
+    * returns same record that the model returns for hostname
+    * returns the same list of records as the model
+    * handles 'null' hostname
+    * empty string doesnt crash for hostname
 2. Test 2..
 
 
