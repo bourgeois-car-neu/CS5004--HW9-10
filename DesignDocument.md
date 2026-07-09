@@ -8,6 +8,30 @@ This document is meant to provide a tool for you to demonstrate the design proce
 
 Place your class diagram below. If you are using the mermaid markdown, you may include the code for it here. For a reminder on the mermaid syntax, you may go [here](https://mermaid.js.org/syntax/classDiagram.html)
 
+```mermaid
+---
+title: Domain Name Information
+---
+classDiagram
+    direction LR
+    ArgsController --> DomainNameModel
+    ArgsController --> Formats
+    DomainNameModel --> DataFormatter
+    DomainNameModel --> Formats
+    DomainNameModelImpl ..|> DomainNameModel
+    DomainNameModelImpl --> ApiResponse
+    DomainNameModelImpl --> NetUtils
+    DomainNameModelImpl --> DomainXmlWrapper
+    DomainNameModelImpl --> DNRecord
+    DataFormatter --> DNRecord
+    DataFormatter --> Formats
+    DataFormatter --> DomainXmlWrapper
+    NetUtils --> Formats
+    
+    GuiController --> DomainNameModel
+    GuiView --> GuiController
+    DrawMap --> DNRecord
+```
 
 
 ## (INITIAL DESIGN): Tests to Write - Brainstorm
