@@ -20,11 +20,17 @@ public class GuiController {
     }
 
     /**
+     * checks for no hostname first.
+     * because java will treat as 'local host' (aka loopback address).
      * look up hostname via the model.
      * @param hostname hostname to look up
-     * @return record for that hostname.
+     * @return null or record for that hostname.
      */
     public DNRecord lookupHostname(String hostname) {
+        // hostname is null or blank.
+        if (hostname == null || hostname.isBlank()) {
+            return null;
+        }
         return model.getRecord(hostname);
     }
 
