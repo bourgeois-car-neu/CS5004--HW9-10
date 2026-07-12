@@ -20,13 +20,24 @@ public class TestGuiController {
     }
 
     /**
-     * test lookupHostname() for null.
+     * test lookupHostname() for empty String.
      * test when no hostname, returns null.
      */
     @Test
     public void testLookupHostnameEmpty() {
         GuiController controller = new GuiController(DomainNameModel.getInstance("data/hostrecords.xml"));
         DNRecord record = controller.lookupHostname("");
+        assertNull(record);
+    }
+
+    /**
+     * test lookupHostname() for null hostname.
+     * test when no hostname, returns null.
+     */
+    @Test
+    public void testLookupHostnameNull() {
+        GuiController controller = new GuiController(DomainNameModel.getInstance("data/hostrecords.xml"));
+        DNRecord record = controller.lookupHostname(null);
         assertNull(record);
     }
 
