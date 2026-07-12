@@ -49,10 +49,12 @@ Write a test (in english) that you can picture for the class diagram you have cr
 You should feel free to number your brainstorm. 
 
 1. Test `GuiController`
-    * returns same record that the model returns for hostname
-    * returns the same list of records as the model
-    * handles 'null' hostname
-    * empty string doesnt crash for hostname
+    * `lookupHostname()` returns same record that the model returns for hostname
+        * handles empty string for hostname
+        * handles 'null' hostname (test both null and empty because different inputs)
+    * `getAllReocrds()`returns the same list of records as the model
+    * test that records written in JSON format
+   
 2. Test 2..
 
 
