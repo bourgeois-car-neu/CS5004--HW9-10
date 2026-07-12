@@ -2,6 +2,8 @@ package student.controller;
 import student.model.DomainNameModel;
 import student.model.DomainNameModel.DNRecord;
 
+import java.util.List;
+
 /**
  * controller to talk between GUI (view) and DomainNameModel.
  */
@@ -24,6 +26,14 @@ public class GuiController {
      */
     public DNRecord lookupHostname(String hostname) {
         return model.getRecord(hostname);
+    }
+
+    /**
+     * gets all records from the model.
+     * @return list of all records.
+     */
+    public List<DNRecord> getAllRecords() {
+        return model.getRecords();
     }
 
 }
