@@ -4,6 +4,8 @@ import student.model.DomainNameModel.DNRecord;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
+import java.io.ByteArrayOutputStream;
+import student.model.formatters.Formats;
 
 
 public class TestGuiController {
@@ -51,5 +53,19 @@ public class TestGuiController {
         List<DNRecord> records = controller.getAllRecords();
         assertEquals(3, records.size());
         assertEquals("www.github.com", records.get(0).hostname());
+    }
+
+    /**
+     * test export().
+     * tests that records are correctly written to an output stream in JSON format.
+     */
+    @Test
+    public void testExportRecordsJson() {
+        GuiController controller = new GuiController(DomainNameModel.getInstance("data/hostrecords.xml"));
+        List<DNRecord> records = controller.getAllRecords();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        controller.export(records, Formats.JSON, out);
+        String result = out.toString();
+        assertTrue(result.contains("www.github.com"));
     }
 }
