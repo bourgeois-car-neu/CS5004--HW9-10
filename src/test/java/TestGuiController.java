@@ -20,6 +20,17 @@ public class TestGuiController {
     }
 
     /**
+     * test lookupHostname() for null.
+     * test when no hostname, returns null.
+     */
+    @Test
+    public void testLookupHostnameEmpty() {
+        GuiController controller = new GuiController(DomainNameModel.getInstance("data/hostrecords.xml"));
+        DNRecord record = controller.lookupHostname("");
+        assertNull(record);
+    }
+
+    /**
      * test getAllRecords().
      * tests that all records from the XML are returned.
      */
