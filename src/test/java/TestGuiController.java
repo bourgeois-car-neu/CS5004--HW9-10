@@ -1,0 +1,19 @@
+import student.controller.GuiController;
+import student.model.DomainNameModel;
+import student.model.DomainNameModel.DNRecord;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class TestGuiController {
+    /**
+     * test lookupHostname().
+     * test that hostname saved in XML returns correct record.
+     */
+    @Test
+    public void testLookupHostnameExist() {
+        GuiController controller = new GuiController(DomainNameModel.getInstance("data/hostrecords.xml"));
+        DNRecord record = controller.lookupHostname("www.github.com");
+        assertEquals("www.github.com", record.hostname());
+        assertEquals("140.82.112.3", record.ip());
+    }
+}
