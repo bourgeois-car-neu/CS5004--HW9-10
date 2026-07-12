@@ -1,7 +1,8 @@
 package student.controller;
 import student.model.DomainNameModel;
 import student.model.DomainNameModel.DNRecord;
-
+import java.io.OutputStream;
+import student.model.formatters.Formats;
 import java.util.List;
 
 /**
@@ -40,6 +41,16 @@ public class GuiController {
      */
     public List<DNRecord> getAllRecords() {
         return model.getRecords();
+    }
+
+    /**
+     * exports records to given output stream in correct format.
+     * @param records records to export.
+     * @param format format to export in.
+     * @param out output stream to write to.
+     */
+    public void export(List<DNRecord> records, Formats format, OutputStream out) {
+        DomainNameModel.writeRecords(records, format, out);
     }
 
 }
