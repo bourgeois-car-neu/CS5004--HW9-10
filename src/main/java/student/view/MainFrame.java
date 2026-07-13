@@ -32,10 +32,21 @@ public class MainFrame extends JFrame {
 
         enterHostname = new JTextField(20); // text box size.
         lookupButton = new JButton("Lookup");  // lookup button.
-        topPanel.add(new JLabel("Hostname:")); // label.
-        topPanel.add(enterHostname);
-        topPanel.add(lookupButton);
-        add(topPanel, BorderLayout.NORTH);  // location for top panel.
+        topPanel.add(new JLabel("Hostname:")); // add label.
+        topPanel.add(enterHostname);  // add text field.
+        topPanel.add(lookupButton);   // add button.
+        add(topPanel, BorderLayout.NORTH); // location for top panel.
+
+        // when button clicked, run code.
+        lookupButton = new JButton("Lookup");
+        // when click happens call 'event' run code.
+        lookupButton.addActionListener(event -> {
+            // reads text typed in text field.
+            String hostname = enterHostname.getText();
+            // View calls Controller.
+            DomainNameModel.DNRecord record = controller.lookupHostname(hostname);
+            System.out.println(record);
+        });
     }
 
     /**
