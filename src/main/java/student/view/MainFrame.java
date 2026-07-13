@@ -3,6 +3,8 @@ import student.controller.GuiController;
 import student.model.DomainNameModel;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+
 
 /**
  * main window for domain name lookup for GUI.
@@ -26,6 +28,10 @@ public class MainFrame extends JFrame {
     private JLabel countryLabel;
     /** label for coordinates.  */
     private JLabel coordinatesLabel;
+    /** button for show all. */
+    private JButton showAllButton;
+    /** list of domains as a String. */
+    private JList<String> domainList;
 
     /**
      * constructor for building and displaying window.
@@ -44,13 +50,16 @@ public class MainFrame extends JFrame {
 
         enterHostname = new JTextField(20); // text box size.
         lookupButton = new JButton("Lookup");  // lookup button.
+        showAllButton = new JButton("Show all");
         topPanel.add(new JLabel("Hostname:")); // add label.
+        topPanel.add(showAllButton);
         topPanel.add(enterHostname);  // add text field.
         topPanel.add(lookupButton);   // add button.
         add(topPanel, BorderLayout.NORTH); // location for top panel.
 
         // when button clicked, run code.
         lookupButton = new JButton("Lookup");
+        // lookup action listener.
         // when click happens call 'event' run code.
         lookupButton.addActionListener(event -> {
             // reads text typed in text field.
@@ -70,6 +79,18 @@ public class MainFrame extends JFrame {
             }
         });
 
+        // show all action listener.
+        showAllButton.addActionListener(event -> {
+            List<DomainNameModel.DNRecord> records = controller.getAllRecords();
+            // create new array with number of spots from records.size().
+            String[] hostnames = new String[records.size()];
+            // for each in DNRecord, get the hostname, put it in domainList.
+            for (int i = 0; i < records.size(); i++) {
+                hostnames[i] = records.get(i).hostname();
+            }
+            domainList.setListData(hostnames);
+        });
+
         // set up for result panel.
         JPanel resultPanel = new JPanel(new GridLayout(6, 1));
         hostnameLabel = new JLabel("Hostname: ");
@@ -87,6 +108,12 @@ public class MainFrame extends JFrame {
         resultPanel.add(countryLabel);
         resultPanel.add(coordinatesLabel);
         add(resultPanel, BorderLayout.CENTER);
+
+        // create new JList.
+        domainList = new JList<>();
+        // create scroll bar
+        JScrollPane listScrollBar = new JScrollPane(domainList);
+        add(listScrollBar, BorderLayout.SOUTH); // location for domainList.
     }
 
     /**
