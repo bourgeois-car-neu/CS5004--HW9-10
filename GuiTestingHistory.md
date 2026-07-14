@@ -13,9 +13,13 @@ When it comes to testing gui's you often have to document how you tested, and wh
 
 
 **show all button**
-![show all button](Images/GuiTestingImages/MainFame-showall.3.png)
+![show all](Images/GuiTestingImages/MainFame-showall.3.png)
 typed hostname into search bar → clicked 'Show all' → results displayed at the bottom
 
 **export button**
-![export button](Images/GuiTestingImages/MainFame-export.4.png)
+![export](Images/GuiTestingImages/MainFame-export.4.png)
 clicked 'Export' → save options displayed on right
+
+display map button
+![display map](Images/GuiTestingImages/MainFrame-displaymap.5.png)
+clicked 'Lookup' → clicked 'Display Map'

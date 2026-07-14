@@ -61,6 +61,7 @@ You should feel free to number your brainstorm.
    * display 'show all' button
    * display 'export' button
      * save option popup
+   * display map window with point (blank canvas)
 
 
 
