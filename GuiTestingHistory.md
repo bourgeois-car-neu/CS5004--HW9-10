@@ -20,6 +20,9 @@ typed hostname into search bar → clicked 'Show all' → results displayed at t
 ![export](Images/GuiTestingImages/MainFame-export.4.png)
 clicked 'Export' → save options displayed on right
 
-display map button
+**display map button**
 ![display map](Images/GuiTestingImages/MainFrame-displaymap.5.png)
 clicked 'Lookup' → clicked 'Display Map'
+
+**display map button w/ real map**
+![display real map](Images/GuiTestingImages/MainFrame-displayrealmap.6.png)
