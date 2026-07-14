@@ -1,8 +1,12 @@
 package student.view;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
+
 
 /**
  * map panel that plots a latitude/longitude point as a dot.
@@ -16,6 +20,16 @@ public class MapPanel extends JPanel {
 
     /** valid point to draw set to false. */
     private boolean hasPoint = false;
+    /** image of map. */
+    private Image mapImage;
+
+    /**
+     * constructor to add image of map.
+     */
+    public MapPanel() {
+        mapImage = new ImageIcon(getClass().getResource("/BlankMap-World-Equirectangular.png")).getImage();
+        System.out.println("Map image loaded: " + (mapImage != null));
+    }
 
     /**
      * updates the point to plot and triggers a redraw.
@@ -38,13 +52,17 @@ public class MapPanel extends JPanel {
     protected void paintComponent(Graphics graphics) {
         // do background painting before custom drawing
         super.paintComponent(graphics);
+        Graphics2D graphics2 = (Graphics2D) graphics; // make Graphics into Graphics2D
+        int widthPanel = getWidth(); // returns width (px) of panel
+        int heightPanel = getHeight(); // // returns height (px) of panel
+        if (mapImage != null) {
+            graphics2.drawImage(mapImage, 0, 0, widthPanel, heightPanel, this);
+        }
         // if no valid point, do nothing
         if (!hasPoint) {
             return;
         }
-        Graphics2D graphics2 = (Graphics2D) graphics; // make Graphics into Graphics2D
-        int widthPanel = getWidth(); // returns width (px) of panel
-        int heightPanel = getHeight(); // // returns height (px) of panel
+
         // convert longitude into x (px)
         int x = (int) ((longitude + 180) / 360 * widthPanel);
         // convert latitude into y (px)
