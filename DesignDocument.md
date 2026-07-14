@@ -53,9 +53,14 @@ You should feel free to number your brainstorm.
         * handles empty string for hostname
         * handles 'null' hostname (test both null and empty because different inputs)
     * `getAllReocrds()`returns the same list of records as the model
-    * test that records written in JSON format
+    * `export()` test that records written in JSON format
    
-2. Test 2..
+2. Test 'MainFrame'
+   * display main window
+   * display result panel
+   * display 'show all' button
+   * display 'export' button
+     * save option popup
 
 
 
