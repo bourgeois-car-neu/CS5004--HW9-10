@@ -38,6 +38,13 @@ public class MainFrame extends JFrame {
     private JList<String> domainList;
     /** button for export. */
     private JButton exportButton;
+    /** map panel for points. */
+    private MapPanel mapPanel;
+    /** display map button. */
+    private JButton mapButton;
+    /** to remember the latest looked-up record. */
+    private DomainNameModel.DNRecord currentRecord;
+
 
     /**
      * constructor for building and displaying window.
@@ -50,18 +57,19 @@ public class MainFrame extends JFrame {
         // end program when window closed.
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // setup for main window.
+        // setup for main window/ topPanel
         JPanel topPanel = new JPanel(new FlowLayout());
         enterHostname = new JTextField(20); // text box size.
         lookupButton = new JButton("Lookup");  // lookup button.
         showAllButton = new JButton("Show all");
         exportButton = new JButton("Export");
-
+        mapButton = new JButton("Display Map");
         topPanel.add(new JLabel("Hostname:")); // add label.
         topPanel.add(showAllButton);
         topPanel.add(enterHostname);  // add text field.
         topPanel.add(lookupButton);   // add button.
         topPanel.add(exportButton);
+        topPanel.add(mapButton);
         add(topPanel, BorderLayout.NORTH); // location for top panel.
 
         // set up for result panel.
@@ -98,8 +106,10 @@ public class MainFrame extends JFrame {
                 regionLabel.setText("Region: " + record.region());
                 countryLabel.setText("Country: " + record.country());
                 coordinatesLabel.setText("Coordinates: " + record.latitude() + ", " + record.longitude());
+                currentRecord = record;
             } else {
                 hostnameLabel.setText("Hostname not found/invalid.");
+                currentRecord = null;
             }
         });
 
@@ -136,6 +146,22 @@ public class MainFrame extends JFrame {
                     error.printStackTrace();
                 }
             }
+        });
+
+        // map button action listener
+        mapButton.addActionListener(event -> {
+            if (currentRecord == null) {
+                JOptionPane.showMessageDialog(this, "Look up a hostname first.");
+                return;
+            }
+            // creates a new second window as 'child' of MainFrame.
+            JDialog mapWindow = new JDialog(this, "Map");
+            MapPanel mapPanel = new MapPanel();
+            mapPanel.setPreferredSize(new Dimension(600, 400));
+            mapPanel.setPoint(currentRecord.latitude(), currentRecord.longitude());
+            mapWindow.add(mapPanel);
+            mapWindow.pack(); // automatically sizes window to fit contents.
+            mapWindow.setVisible(true); // show map.
         });
 
         // create new JList.
