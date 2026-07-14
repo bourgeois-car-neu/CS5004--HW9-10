@@ -95,22 +95,39 @@ public class MainFrame extends JFrame {
         lookupButton.addActionListener(event -> {
             // reads text typed in text field.
             String hostname = enterHostname.getText();
-            // View calls Controller.
-            DomainNameModel.DNRecord record = controller.lookupHostname(hostname);
-
-            // check to make sure record not null.
-            if (record != null) {
-                hostnameLabel.setText("Hostname: " + record.hostname());
-                ipLabel.setText("IP: " + record.ip());
-                cityLabel.setText("City: " + record.city());
-                regionLabel.setText("Region: " + record.region());
-                countryLabel.setText("Country: " + record.country());
-                coordinatesLabel.setText("Coordinates: " + record.latitude() + ", " + record.longitude());
-                currentRecord = record;
-            } else {
-                hostnameLabel.setText("Hostname not found/invalid.");
-                currentRecord = null;
-            }
+            // create new swing worker - with the result type (DNRecord) - no progress updates (Void).
+            SwingWorker<DomainNameModel.DNRecord, Void> worker = new SwingWorker<>() {
+                @Override
+                // swing worker will call controller method lookupHostname()
+                protected DomainNameModel.DNRecord doInBackground() {
+                    return controller.lookupHostname(hostname);
+                }
+                @Override
+                // done() auto called after doInBackground() runs
+                // runs on 'original worker'
+                protected void done() {
+                    try {
+                        // get record returned from doInBackground()
+                        DomainNameModel.DNRecord record = get();
+                        // check to make sure record not null.
+                        if (record != null) {
+                            hostnameLabel.setText("Hostname: " + record.hostname());
+                            ipLabel.setText("IP: " + record.ip());
+                            cityLabel.setText("City: " + record.city());
+                            regionLabel.setText("Region: " + record.region());
+                            countryLabel.setText("Country: " + record.country());
+                            coordinatesLabel.setText("Coordinates: " + record.latitude() + ", " + record.longitude());
+                            currentRecord = record;
+                        } else {
+                            hostnameLabel.setText("Hostname not found/invalid.");
+                            currentRecord = null;
+                        }
+                    } catch (Exception error) {
+                        error.printStackTrace();
+                    }
+                }
+            };
+            worker.execute(); // starts swing worker (following the jobs above)
         });
 
         // show all action listener.
