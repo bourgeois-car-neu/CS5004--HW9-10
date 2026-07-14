@@ -29,4 +29,24 @@
     <latitude>40.7746</latitude>
     <longitude>-73.4761</longitude>
   </domain>
+  <domain>
+    <hostname>www.reddit.com</hostname>
+    <ip>146.75.37.140</ip>
+    <city>Washington</city>
+    <region>District of Columbia</region>
+    <country>US</country>
+    <postal>20068</postal>
+    <latitude>38.894</latitude>
+    <longitude>-77.0365</longitude>
+  </domain>
+  <domain>
+    <hostname>www.apple.com</hostname>
+    <ip>23.51.87.2</ip>
+    <city>Boston</city>
+    <region>Massachusetts</region>
+    <country>US</country>
+    <postal>02217</postal>
+    <latitude>42.35843</latitude>
+    <longitude>-71.05977</longitude>
+  </domain>
 </domainList>

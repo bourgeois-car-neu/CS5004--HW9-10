@@ -63,6 +63,7 @@ You should feel free to number your brainstorm.
      * save option popup
    * display map window with point (blank canvas)
      * display map window with actual map
+   * new hostname & info displayed (a hostname not in data)
 
 
 

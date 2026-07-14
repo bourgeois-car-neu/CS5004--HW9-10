@@ -26,3 +26,7 @@ clicked 'Lookup' → clicked 'Display Map'
 
 **display map button w/ real map**
 ![display real map](Images/GuiTestingImages/MainFrame-displayrealmap.6.png)
+
+**lookup for NEW hostname**
+![lookup](Images/GuiTestingImages/MainFrame-lookup.7.png)
+lookup for a hostname that's not stored in 'data' folder. uses SwingWorker to fetch hostname & info.
