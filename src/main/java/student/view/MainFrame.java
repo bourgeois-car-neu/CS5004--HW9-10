@@ -1,8 +1,12 @@
 package student.view;
 import student.controller.GuiController;
 import student.model.DomainNameModel;
+import student.model.formatters.Formats;
+import javax.swing.JFileChooser;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 
@@ -32,6 +36,8 @@ public class MainFrame extends JFrame {
     private JButton showAllButton;
     /** list of domains as a String. */
     private JList<String> domainList;
+    /** button for export. */
+    private JButton exportButton;
 
     /**
      * constructor for building and displaying window.
@@ -39,26 +45,43 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         // creates Controller for View to use.
         controller = new GuiController(DomainNameModel.getInstance());
-        // title setup.
-        setTitle("Domain Name Lookup");
-        setSize(600, 400);
+        setTitle("Domain Name Lookup"); // title setup.
+        setSize(750, 400);
         // end program when window closed.
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // setup for main window.
         JPanel topPanel = new JPanel(new FlowLayout());
-
         enterHostname = new JTextField(20); // text box size.
         lookupButton = new JButton("Lookup");  // lookup button.
         showAllButton = new JButton("Show all");
+        exportButton = new JButton("Export");
+
         topPanel.add(new JLabel("Hostname:")); // add label.
         topPanel.add(showAllButton);
         topPanel.add(enterHostname);  // add text field.
         topPanel.add(lookupButton);   // add button.
+        topPanel.add(exportButton);
         add(topPanel, BorderLayout.NORTH); // location for top panel.
 
-        // when button clicked, run code.
-        lookupButton = new JButton("Lookup");
+        // set up for result panel.
+        JPanel resultPanel = new JPanel(new GridLayout(6, 1));
+        hostnameLabel = new JLabel("Hostname: ");
+        ipLabel = new JLabel("IP: ");
+        cityLabel = new JLabel("City: ");
+        regionLabel = new JLabel("Region: ");
+        countryLabel = new JLabel("Country: ");
+        coordinatesLabel = new JLabel("Coordinates: ");
+
+        // add result panel.
+        resultPanel.add(hostnameLabel);
+        resultPanel.add(ipLabel);
+        resultPanel.add(cityLabel);
+        resultPanel.add(regionLabel);
+        resultPanel.add(countryLabel);
+        resultPanel.add(coordinatesLabel);
+        add(resultPanel, BorderLayout.CENTER);
+
         // lookup action listener.
         // when click happens call 'event' run code.
         lookupButton.addActionListener(event -> {
@@ -66,6 +89,7 @@ public class MainFrame extends JFrame {
             String hostname = enterHostname.getText();
             // View calls Controller.
             DomainNameModel.DNRecord record = controller.lookupHostname(hostname);
+
             // check to make sure record not null.
             if (record != null) {
                 hostnameLabel.setText("Hostname: " + record.hostname());
@@ -91,23 +115,28 @@ public class MainFrame extends JFrame {
             domainList.setListData(hostnames);
         });
 
-        // set up for result panel.
-        JPanel resultPanel = new JPanel(new GridLayout(6, 1));
-        hostnameLabel = new JLabel("Hostname: ");
-        ipLabel = new JLabel("IP: ");
-        cityLabel = new JLabel("City: ");
-        regionLabel = new JLabel("Region: ");
-        countryLabel = new JLabel("Country: ");
-        coordinatesLabel = new JLabel("Coordinates: ");
-
-        // add result panel.
-        resultPanel.add(hostnameLabel);
-        resultPanel.add(ipLabel);
-        resultPanel.add(cityLabel);
-        resultPanel.add(regionLabel);
-        resultPanel.add(countryLabel);
-        resultPanel.add(coordinatesLabel);
-        add(resultPanel, BorderLayout.CENTER);
+        // export button action listener.
+        exportButton.addActionListener(event -> {
+            JFileChooser fileChooser = new JFileChooser();  // create new file chooser.
+            // opens the dialog window for MainFame, user click gets stored as 'result'.
+            int result = fileChooser.showSaveDialog(this);
+            // if user clicks "save/open" (APPROVED_OPTION).
+            if (result == fileChooser.APPROVE_OPTION) {
+                // get selected file, store as 'File' object.
+                File selectedFile = fileChooser.getSelectedFile();
+                try {
+                    // creates/opens file at location user clicked.
+                    FileOutputStream outputFile = new FileOutputStream(selectedFile);
+                    // gets all records in Model to export.
+                    List<DomainNameModel.DNRecord> records = controller.getAllRecords();
+                    // call Controller export method - records to write, format, destination.
+                    controller.export(records, Formats.JSON, outputFile);
+                    outputFile.close();  // close file stream.
+                } catch (Exception error) {
+                    error.printStackTrace();
+                }
+            }
+        });
 
         // create new JList.
         domainList = new JList<>();
