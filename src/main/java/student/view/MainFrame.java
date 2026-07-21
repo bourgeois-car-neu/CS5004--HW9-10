@@ -44,6 +44,8 @@ public class MainFrame extends JFrame {
     private JButton mapButton;
     /** to remember the latest looked-up record. */
     private DomainNameModel.DNRecord currentRecord;
+    /** drop down option for export formats. */
+    private JComboBox<Formats> exportOptions;
 
 
     /**
@@ -63,12 +65,14 @@ public class MainFrame extends JFrame {
         lookupButton = new JButton("Lookup");  // lookup button.
         showAllButton = new JButton("Show all");
         exportButton = new JButton("Export");
+        exportOptions = new JComboBox<>(Formats.values());
         mapButton = new JButton("Display Map");
         topPanel.add(new JLabel("Hostname:")); // add label.
         topPanel.add(showAllButton);
         topPanel.add(enterHostname);  // add text field.
         topPanel.add(lookupButton);   // add button.
         topPanel.add(exportButton);
+        topPanel.add(exportOptions);
         topPanel.add(mapButton);
         add(topPanel, BorderLayout.NORTH); // location for top panel.
 
@@ -151,13 +155,14 @@ public class MainFrame extends JFrame {
             if (result == fileChooser.APPROVE_OPTION) {
                 // get selected file, store as 'File' object.
                 File selectedFile = fileChooser.getSelectedFile();
+                Formats selectedFormat = (Formats) exportOptions.getSelectedItem();
                 try {
                     // creates/opens file at location user clicked.
                     FileOutputStream outputFile = new FileOutputStream(selectedFile);
                     // gets all records in Model to export.
                     List<DomainNameModel.DNRecord> records = controller.getAllRecords();
                     // call Controller export method - records to write, format, destination.
-                    controller.export(records, Formats.JSON, outputFile);
+                    controller.export(records, selectedFormat, outputFile);
                     outputFile.close();  // close file stream.
                 } catch (Exception error) {
                     error.printStackTrace();
