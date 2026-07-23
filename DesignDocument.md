@@ -55,7 +55,7 @@ You should feel free to number your brainstorm.
     * `getAllReocrds()`returns the same list of records as the model
     * `export()` test that records written in JSON format
    
-2. Test 'MainFrame'
+2. Test `MainFrame`
    * display main window
    * display result panel
    * display 'show all' button
@@ -75,7 +75,30 @@ Go through your completed code, and update your class diagram to reflect the fin
 > [!WARNING]
 > If you resubmit your assignment for manual grading, this is a section that often needs updating. You should double check with every resubmit to make sure it is up to date.
 
-
+```mermaid
+---
+title: Domain Name Information
+---
+classDiagram
+    direction LR
+    ArgsController --> DomainNameModel
+    ArgsController --> Formats
+    DomainNameModel --> DataFormatter
+    DomainNameModel --> Formats
+    DomainNameModelImpl ..|> DomainNameModel
+    DomainNameModelImpl --> ApiResponse
+    DomainNameModelImpl --> NetUtils
+    DomainNameModelImpl --> DomainXmlWrapper
+    DomainNameModelImpl --> DNRecord
+    DataFormatter --> DNRecord
+    DataFormatter --> Formats
+    DataFormatter --> DomainXmlWrapper
+    NetUtils --> Formats
+    
+    GuiController --> DomainNameModel
+    MainFrame --> GuiController
+    MapPanel --> DNRecord
+```
 
 
 

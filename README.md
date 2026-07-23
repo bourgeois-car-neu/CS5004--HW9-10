@@ -1,6 +1,8 @@
-Name:
+Name: Caroline Bourgeois
 
-How many hours did it take you to complete this assignment (estimate)?
+GitHub link: https://github.com/bourgeois-car-neu/CS5004--HW9-10
+
+How many hours did it take you to complete this assignment (estimate)? ~30
 
 Did you collaborate with any other students/TAs/Professors? If so, tell us who and in what
 capacity.
